@@ -1,0 +1,13 @@
+{
+  "type": "postgres",
+  "host": "localhost",
+  "port": 5432,
+  "username": "jsinamaleki",
+  "password": "",
+  "database": "typeorm",
+  "synchronize": true,
+  "entities": [
+    "src/entities/*.*"
+  ],
+  "logging": true
+}
