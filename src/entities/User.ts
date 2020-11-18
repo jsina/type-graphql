@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, ObjectType, Root } from "type-graphql";
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -24,5 +24,7 @@ export class User extends BaseEntity {
   password: string;
 
   @Field()
-  fullName: string;
+  fullName(@Root() { firstName, lastName }: User): string {
+    return `${firstName} ${lastName}`;
+  }
 }
