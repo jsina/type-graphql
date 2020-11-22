@@ -10,7 +10,6 @@ import cors from "cors";
 import { LoginResolver, MeResolver, RegisterResolver } from "./resolvers";
 import { redis } from "./redis";
 import { SESSION_SECRET } from "./constants";
-import { authChecker } from "./authChecker";
 
 dotenv.config();
 
@@ -19,7 +18,10 @@ const main = async () => {
 
   const schema = await buildSchema({
     resolvers: [RegisterResolver, LoginResolver, MeResolver],
-    authChecker,
+    /*
+      authChecker for checking @Authentice()
+      authChecker,
+    */
   });
   const apolloServer = new ApolloServer({
     schema,

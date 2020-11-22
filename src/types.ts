@@ -10,3 +10,8 @@ type MySessionRequest = Request & {
 export interface Context {
   req: MySessionRequest;
 }
+
+export enum Roles {
+  ADMIN,
+  GUEST,
+}
