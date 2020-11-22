@@ -18,6 +18,10 @@ const main = async () => {
 
   const schema = await buildSchema({
     resolvers: [RegisterResolver, LoginResolver, MeResolver],
+    /*
+      authChecker for checking @Authentice()
+      authChecker,
+    */
   });
   const apolloServer = new ApolloServer({
     schema,
