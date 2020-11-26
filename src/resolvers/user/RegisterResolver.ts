@@ -1,9 +1,14 @@
 import { Arg, Mutation, Query, Resolver, UseMiddleware } from "type-graphql";
 import bcrypt from "bcryptjs";
+import { v4 } from "uuid";
+
 import { RegisterInput } from "./register";
 import { User } from "../../entities";
 import { IsAuth } from "../middleware/IsAuth";
 import { Roles } from "../../types";
+import { redis } from "../../redis";
+import { sendEmail } from "../../utils";
+
 @Resolver()
 export class RegisterResolver {
   @Query(() => String)
@@ -24,6 +29,11 @@ export class RegisterResolver {
       lastName,
       password: hashedPassword,
     }).save();
+
+    const token = v4();
+    sendEmail(user.email, token);
+    await redis.set(token, user.id, "EX", 60 * 15);
+
     return user;
   }
 }
