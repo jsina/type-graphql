@@ -23,6 +23,9 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
+  @Column({ default: false })
+  isConfirmed: boolean;
+
   @Field()
   fullName(@Root() { firstName, lastName }: User): string {
     return `${firstName} ${lastName}`;
