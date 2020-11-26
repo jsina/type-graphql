@@ -7,7 +7,12 @@ import session from "express-session";
 import dotenv from "dotenv";
 import cors from "cors";
 
-import { LoginResolver, MeResolver, RegisterResolver } from "./resolvers";
+import {
+  EmailConfirmation,
+  LoginResolver,
+  MeResolver,
+  RegisterResolver,
+} from "./resolvers";
 import { redis } from "./redis";
 import { SESSION_SECRET } from "./constants";
 
@@ -17,7 +22,7 @@ const main = async () => {
   await createConnection();
 
   const schema = await buildSchema({
-    resolvers: [RegisterResolver, LoginResolver, MeResolver],
+    resolvers: [RegisterResolver, LoginResolver, EmailConfirmation, MeResolver],
     /*
       authChecker for checking @Authentice()
       authChecker,
