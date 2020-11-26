@@ -15,6 +15,9 @@ export class LoginResolver {
     if (!user) {
       return null;
     }
+    if (!user.isConfirmed) {
+      throw new Error("Your email has not confirmed!");
+    }
     const comparePassword = bcryptjs.compare(password, user.password);
     if (!comparePassword) {
       return null;
