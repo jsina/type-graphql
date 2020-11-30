@@ -7,7 +7,7 @@ import {
   MAIL_PASSWORD,
 } from "../constants";
 
-export const sendEmail = async (email: string, token: string) => {
+export const sendEmail = async (email: string, url: string) => {
   let transporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
@@ -23,8 +23,8 @@ export const sendEmail = async (email: string, token: string) => {
     from: `"Fred Foo 👻" ${MAIL_USERNAME}`, // sender address
     to: email, // list of receivers
     subject: "Hello ✔", // Subject line
-    text: `Hello world? http://localhost:3000/users/confirmation/${token}`, // plain text body
-    html: `<b>Hello world?</b><br><a href="http://localhost:3000/users/confirmation/${token}">confirm email</a>`, // html body
+    text: `Hello world? ${url}`, // plain text body
+    html: `<b>Hello world?</b><br><a href="${url}">confirm email</a>`, // html body
   });
 
   console.log("Message sent: %s", info.messageId);
