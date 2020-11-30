@@ -11,7 +11,9 @@ import { User } from "../../../entities";
 export class IsEmailExistConstraint implements ValidatorConstraintInterface {
   validate(email: string, _args: ValidationArguments) {
     return User.findOne({ where: { email } }).then((user) => {
-      if (user) return false;
+      if (user) {
+        return false;
+      }
       return true;
     });
   }
