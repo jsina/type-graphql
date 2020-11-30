@@ -8,6 +8,7 @@ import { IsAuth } from "../middleware/IsAuth";
 import { Roles } from "../../types";
 import { redis } from "../../redis";
 import { sendEmail } from "../../utils";
+import { CONFIRM_EMAIL_PREFIX } from "../../constants";
 
 @Resolver()
 export class RegisterResolver {
@@ -30,8 +31,10 @@ export class RegisterResolver {
       password: hashedPassword,
     }).save();
 
-    const token = v4();
-    sendEmail(user.email, token);
+    const token = CONFIRM_EMAIL_PREFIX + v4();
+    const url = `http://localhost:3000/users/confirmation/${token}`;
+
+    sendEmail(user.email, url);
     await redis.set(token, user.id, "EX", 60 * 15);
 
     return user;
