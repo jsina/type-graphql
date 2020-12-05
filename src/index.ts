@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import { redis } from "./redis";
-import { SESSION_SECRET } from "./constants";
+import { SESSION_NAME, SESSION_SECRET } from "./constants";
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ const main = async () => {
   });
   const apolloServer = new ApolloServer({
     schema,
-    context: ({ req }) => ({ req }),
+    context: ({ req, res }) => ({ req, res }),
   });
 
   const RedisStore = require("connect-redis")(session);
@@ -42,14 +42,14 @@ const main = async () => {
       store: new RedisStore({
         client: redis,
       }),
-      name: "uid",
+      name: SESSION_NAME,
       secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
-        maxAge: 1000 * 60 * 60 * 24 * 1 * 365, // 7 years
+        maxAge: 1000 * 60 * 60 * 24 * 365, // 1 years
       },
     })
   );
