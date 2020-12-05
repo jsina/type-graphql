@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import session from "express-session";
 
 type MySessionRequest = Request & {
@@ -9,6 +9,7 @@ type MySessionRequest = Request & {
 };
 export interface Context {
   req: MySessionRequest;
+  res: Response;
 }
 
 export enum Roles {
